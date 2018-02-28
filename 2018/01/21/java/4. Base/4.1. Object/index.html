@@ -87,13 +87,14 @@
 <meta property="og:site_name" content="prowo&#39;s Blog">
 <meta property="og:description" content="jdk版本：1.8  整体概述12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061public class Object &amp;#123;    /* 一个本地方法，具体是用C（C++）在DLL中实现的，然后通过JNI调用。*/">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://sprowo.github.io/2018/01/21/java/4.%20Base/4.1.%20Object/img/finalize状态变迁图.gif">
-<meta property="og:image" content="https://sprowo.github.io/2018/01/21/java/4.%20Base/4.1.%20Object/img/深克隆.png">
-<meta property="og:updated_time" content="2018-02-28T10:33:09.468Z">
+<meta property="og:image" content="https://sprowo.github.io/img/java/base/finalize状态变迁图.gif">
+<meta property="og:image" content="https://sprowo.github.io/img/java/base/浅克隆.png">
+<meta property="og:image" content="https://sprowo.github.io/img/java/base/深克隆.png">
+<meta property="og:updated_time" content="2018-02-28T11:00:38.310Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Object源码解析">
 <meta name="twitter:description" content="jdk版本：1.8  整体概述12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061public class Object &amp;#123;    /* 一个本地方法，具体是用C（C++）在DLL中实现的，然后通过JNI调用。*/">
-<meta name="twitter:image" content="https://sprowo.github.io/2018/01/21/java/4.%20Base/4.1.%20Object/img/finalize状态变迁图.gif">
+<meta name="twitter:image" content="https://sprowo.github.io/img/java/base/finalize状态变迁图.gif">
 
 
 
@@ -414,7 +415,7 @@
 <li>unreachable：对象不可通过上面两种途径可达。</li>
 </ol>
 <p><strong>状态变迁图：</strong></p>
-<p><img src="img/finalize状态变迁图.gif" alt="finalize状态变迁图"></p>
+<p><img src="/img/java/base/finalize状态变迁图.gif" alt="finalize状态变迁图"></p>
 <p><strong>变迁说明：</strong></p>
 <ol>
 <li>新建对象首先处于[reachable, unfinalized]状态(A)；</li>
@@ -478,14 +479,14 @@
 </blockquote>
 <p>在浅克隆中，如果原型对象的成员变量是值类型，将复制一份给克隆对象；如果原型对象的成员变量是引用类型，则将引用对象的地址复制一份给克隆对象，也就是说原型对象和克隆对象的成员变量指向相同的内存地址。</p>
 <p>简单来说，在浅克隆中，当对象被复制时只复制它本身和其中包含的值类型的成员变量，而引用类型的成员对象并没有复制。</p>
-<p>@import “img/浅克隆.png”</p>
+<p><img src="/img/java/base/浅克隆.png" alt="浅克隆"></p>
 <p>在Java语言中，通过覆盖Object类的clone()方法可以实现浅克隆。</p>
 <blockquote>
 <p>深克隆</p>
 </blockquote>
 <p>在深克隆中，无论原型对象的成员变量是值类型还是引用类型，都将复制一份给克隆对象，深克隆将原型对象的所有引用对象也复制一份给克隆对象。</p>
 <p>简单来说，在深克隆中，除了对象本身被复制外，对象所包含的所有成员变量也将复制。</p>
-<p><img src="img/深克隆.png" alt="深克隆"></p>
+<p><img src="/img/java/base/深克隆.png" alt="深克隆"></p>
 <p>在Java语言中，如果需要实现深克隆，可以通过覆盖Object类的clone()方法实现，也可以通过序列化(Serialization)等方式来实现。</p>
 <p><strong>（如果引用类型里面还包含很多引用类型，或者内层引用类型的类里面又包含引用类型，使用clone方法就会很麻烦。这时我们可以用序列化的方式来实现对象的深克隆。）</strong></p>
 <p>序列化就是将对象写到流的过程，写到流中的对象是原有对象的一个拷贝，而原对象仍然存在于内存中。通过序列化实现的拷贝不仅可以复制对象本身，而且可以复制其引用的成员对象，因此通过序列化将对象写到一个流中，再从流里将其读出来，可以实现深克隆。需要注意的是能够实现序列化的对象其类必须实现Serializable接口，否则无法实现序列化操作。</p>
