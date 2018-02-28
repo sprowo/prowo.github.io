@@ -1621,7 +1621,7 @@ StringBuilder 来实现的，而之前这个操作是采用 StringBuffer 实现�
       
         
           
-            <h1 id="AbstractQueuedSynchronizer源码分析"><a href="#AbstractQueuedSynchronizer源码分析" class="headerlink" title="AbstractQueuedSynchronizer源码分析"></a>AbstractQueuedSynchronizer源码分析</h1><blockquote>
+            <blockquote>
 <p>jdk版本：1.8</p>
 </blockquote>
 <p>AbstractQueudSynchronizer是Doug Lea Java并发编程的基础，简称AQS。内部主要包括Node和ConditionObject两个内部类，基于Node节点构建了一个FIFO（先进先出）队列，用来存储等待锁的线程的队列。基于ConditionObject节点也构造了一个FIFO队列，用于存储因为某种原因已经获取到锁而又主动释放锁的线程的队列。在concurrent包下面的大部分的工具类都是以他为基础，包括CountDownLatch,Lock,ReadWriteLock,Semaphare,条件队列….等等。</p>
