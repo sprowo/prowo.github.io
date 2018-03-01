@@ -674,10 +674,7 @@ NEW：线程刚创建, 尚未
       
         
           
-          
-jdk版本：1.8
-
-AbstractQueudSynchronizer是Doug Lea Java并发编程的基础，简称AQS。内部主要包括Node和ConditionObject两个内部类，基于Node节点构建了一个FIFO（先进先出）队列，用来存储等待锁的线程的队列。基于ConditionOb
+          AbstractQueudSynchronizer是Doug Lea Java并发编程的基础，简称AQS。内部主要包括Node和ConditionObject两个内部类，基于Node节点构建了一个FIFO（先进先出）队列，用来存储等待锁的线程的队列。基于ConditionObject节点也构造了一个
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -977,7 +974,7 @@ map相关原理、源码，比如：hashmap、hashtable、treemap？线程安全
       
         
           
-          哈希表（hash table）也叫散列表，是一种非常重要的数据结构，应用场景及其丰富，许多缓存技术（比如memcached、redis）的核心其实就是在内存中维护一张大的哈希表，而HashMap的实现原理也常常出现在各类的面试题中，重要性可见一般。随着JDK（Java Developmet Kit）
+          哈希表（hash table）也叫散列表，是一种非常重要的数据结构，应用场景及其丰富，许多缓存技术（比如memcached、redis）的核心其实就是在内存中维护一张大的哈希表，而HashMap的实现原理也常常出现在各类的面试题中，重要性可见一般。本文将深入源码，分析HashMap实现原理。源码基于
           ...
           <!--noindex-->
           <div class="post-button text-center">
