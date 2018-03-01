@@ -89,18 +89,18 @@
 
 
 
-<meta name="description" content="jdk版本：1.8  常量1234567891011121314151617181920212223242526272829303132333435363738394041/** * The default initial capacity - MUST be a power of two. */static final int DEFAULT_INITIAL_CAPACITY = 1 &amp;lt;">
+<meta name="description" content="哈希表（hash table）也叫散列表，是一种非常重要的数据结构，应用场景及其丰富，许多缓存技术（比如memcached、redis）的核心其实就是在内存中维护一张大的哈希表，而HashMap的实现原理也常常出现在各类的面试题中，重要性可见一般。随着JDK（Java Developmet Kit）版本的更新，JDK1.8对HashMap底层的实现进行了优化，例如引入红黑树的数据结构和扩容的优化等">
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HashMap源码解析">
+<meta property="og:title" content="JDK源码分析——HashMap类">
 <meta property="og:url" content="https://sprowo.github.io/2018/01/21/java/3. Collection/3.1. HashMap/index.html">
 <meta property="og:site_name" content="prowo&#39;s Blog">
-<meta property="og:description" content="jdk版本：1.8  常量1234567891011121314151617181920212223242526272829303132333435363738394041/** * The default initial capacity - MUST be a power of two. */static final int DEFAULT_INITIAL_CAPACITY = 1 &amp;lt;">
+<meta property="og:description" content="哈希表（hash table）也叫散列表，是一种非常重要的数据结构，应用场景及其丰富，许多缓存技术（比如memcached、redis）的核心其实就是在内存中维护一张大的哈希表，而HashMap的实现原理也常常出现在各类的面试题中，重要性可见一般。随着JDK（Java Developmet Kit）版本的更新，JDK1.8对HashMap底层的实现进行了优化，例如引入红黑树的数据结构和扩容的优化等">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-28T10:49:54.893Z">
+<meta property="og:updated_time" content="2018-03-01T11:12:14.625Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HashMap源码解析">
-<meta name="twitter:description" content="jdk版本：1.8  常量1234567891011121314151617181920212223242526272829303132333435363738394041/** * The default initial capacity - MUST be a power of two. */static final int DEFAULT_INITIAL_CAPACITY = 1 &amp;lt;">
+<meta name="twitter:title" content="JDK源码分析——HashMap类">
+<meta name="twitter:description" content="哈希表（hash table）也叫散列表，是一种非常重要的数据结构，应用场景及其丰富，许多缓存技术（比如memcached、redis）的核心其实就是在内存中维护一张大的哈希表，而HashMap的实现原理也常常出现在各类的面试题中，重要性可见一般。随着JDK（Java Developmet Kit）版本的更新，JDK1.8对HashMap底层的实现进行了优化，例如引入红黑树的数据结构和扩容的优化等">
 
 
 
@@ -136,7 +136,7 @@
 
 
 
-  <title>HashMap源码解析 | prowo's Blog</title>
+  <title>JDK源码分析——HashMap类 | prowo's Blog</title>
   
 
 
@@ -300,7 +300,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">HashMap源码解析</h1>
+          <h1 class="post-title" itemprop="name headline">JDK源码分析——HashMap类</h1>
         
 
         <div class="post-meta">
@@ -312,7 +312,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-21T17:30:00+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-21T00:00:00+08:00">
                 2018-01-21
               </time>
             
@@ -372,9 +372,8 @@
       
 
       
-        <blockquote>
-<p>jdk版本：1.8</p>
-</blockquote>
+        <p>哈希表（hash table）也叫散列表，是一种非常重要的数据结构，应用场景及其丰富，许多缓存技术（比如memcached、redis）的核心其实就是在内存中维护一张大的哈希表，而HashMap的实现原理也常常出现在各类的面试题中，重要性可见一般。随着JDK（Java Developmet Kit）版本的更新，JDK1.8对HashMap底层的实现进行了优化，例如引入红黑树的数据结构和扩容的优化等。本文结合JDK1.7和JDK1.8的区别，深入探讨HashMap的结构实现和功能原理。源码基于JDK1.8。</p>
+<h2 id="必备知识"><a href="#必备知识" class="headerlink" title="必备知识"></a>必备知识</h2><p>HashMap的底层原理基于哈希表，如果你还未了解哈希表原理，请参考<a href="http://www.cnblogs.com/yangecnu/p/Introduce-Hashtable.html" target="_blank" rel="noopener">浅谈算法和数据结构: 十一 哈希表</a></p>
 <h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * The default initial capacity - MUST be a power of two.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_INITIAL_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">4</span>; <span class="comment">// aka 16</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * The maximum capacity, used if a higher value is implicitly specified</span></span><br><span class="line"><span class="comment"> * by either of the constructors with arguments.</span></span><br><span class="line"><span class="comment"> * MUST be a power of two &lt;= 1&lt;&lt;30.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAXIMUM_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">30</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * The load factor used when none specified in constructor.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">float</span> DEFAULT_LOAD_FACTOR = <span class="number">0.75f</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * The bin count threshold for using a tree rather than list for a</span></span><br><span class="line"><span class="comment"> * bin.  Bins are converted to trees when adding an element to a</span></span><br><span class="line"><span class="comment"> * bin with at least this many nodes. The value must be greater</span></span><br><span class="line"><span class="comment"> * than 2 and should be at least 8 to mesh with assumptions in</span></span><br><span class="line"><span class="comment"> * tree removal about conversion back to plain bins upon</span></span><br><span class="line"><span class="comment"> * shrinkage.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TREEIFY_THRESHOLD = <span class="number">8</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * The bin count threshold for untreeifying a (split) bin during a</span></span><br><span class="line"><span class="comment"> * resize operation. Should be less than TREEIFY_THRESHOLD, and at</span></span><br><span class="line"><span class="comment"> * most 6 to mesh with shrinkage detection under removal.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> UNTREEIFY_THRESHOLD = <span class="number">6</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * The smallest table capacity for which bins may be treeified.</span></span><br><span class="line"><span class="comment"> * (Otherwise the table is resized if too many nodes in a bin.)</span></span><br><span class="line"><span class="comment"> * Should be at least 4 * TREEIFY_THRESHOLD to avoid conflicts</span></span><br><span class="line"><span class="comment"> * between resizing and treeification thresholds.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MIN_TREEIFY_CAPACITY = <span class="number">64</span>;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>DEFAULT_INITIAL_CAPACITY: 默认初始化容量为16，必须是2的幂；</li>
@@ -428,8 +427,15 @@
 <p>ConcurrentHashMap(以下简称CHM)是JUC包中的一个类。jdk 1.7和1.8有区别,在1.8中CHM摒弃了Segment（锁段）的概念，而是启用了一种全新的方式实现,利用CAS算法。</p>
 <p><strong>3. SynchronizedMap</strong></p>
 <p>调用synchronizedMap()方法后会返回一个SynchronizedMap类的对象，而在SynchronizedMap类中使用了synchronized同步关键字来保证对Map的操作是线程安全的。</p>
-<h3 id="各JDK版本中HashMap的区别"><a href="#各JDK版本中HashMap的区别" class="headerlink" title="各JDK版本中HashMap的区别"></a>各JDK版本中HashMap的区别</h3><h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ul>
+<h3 id="各JDK版本中HashMap的区别"><a href="#各JDK版本中HashMap的区别" class="headerlink" title="各JDK版本中HashMap的区别"></a>各JDK版本中HashMap的区别</h3><ol>
+<li>确定哈希桶数组索引位置区别：JDK1.8优化了高位运算的算法，通过hashCode()的高16位异或低16位实现；</li>
+<li>新节点插入位置的区别：JDK1.7新节点插入在链表头部，JDK1.8新节点插入在链表尾部；</li>
+<li>resize的区别：JDK1.7重新计算所有节点位置，一个个的插入新HashMap中，JDK1.8一个桶中的元素，只会在新桶或原桶；</li>
+<li>哈希冲突解决方法区别：JDK1.8引入红黑树，当链表节点个数达到8将进行树化。</li>
+</ol>
+<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ul>
 <li><a href="https://segmentfault.com/a/1190000012926722" target="_blank" rel="noopener">HashMap 源码详细分析(JDK1.8)</a></li>
+<li><a href="http://www.cnblogs.com/yangecnu/p/Introduce-Hashtable.html" target="_blank" rel="noopener">浅谈算法和数据结构: 十一 哈希表</a></li>
 </ul>
 
       
@@ -461,8 +467,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/21/java/4. Base/4.2. String/" rel="next" title="String解析">
-                <i class="fa fa-chevron-left"></i> String解析
+              <a href="/2018/01/21/java/4. Base/4.2. String/" rel="next" title="String面试题">
+                <i class="fa fa-chevron-left"></i> String面试题
               </a>
             
           </div>
@@ -471,8 +477,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/01/21/java/2. Thread/2.1. Thead/" rel="prev" title="Thread详解">
-                Thread详解 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/01/21/Java工程师面试知识点总结/" rel="prev" title="Java工程师面试知识点总结">
+                Java工程师面试知识点总结 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -630,7 +636,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常量"><span class="nav-number">1.</span> <span class="nav-text">常量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#成员变量"><span class="nav-number">2.</span> <span class="nav-text">成员变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内部类"><span class="nav-number">3.</span> <span class="nav-text">内部类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Node"><span class="nav-number">3.1.</span> <span class="nav-text">Node</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TreeNode"><span class="nav-number">3.2.</span> <span class="nav-text">TreeNode</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重要方法解析"><span class="nav-number">4.</span> <span class="nav-text">重要方法解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构造方法"><span class="nav-number">4.1.</span> <span class="nav-text">构造方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hash-方法"><span class="nav-number">4.2.</span> <span class="nav-text">hash()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#put-方法"><span class="nav-number">4.3.</span> <span class="nav-text">put()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#resize-方法"><span class="nav-number">4.4.</span> <span class="nav-text">resize()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get-方法"><span class="nav-number">4.5.</span> <span class="nav-text">get()方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他细节"><span class="nav-number">5.</span> <span class="nav-text">其他细节</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#被transient所修饰table变量"><span class="nav-number">5.1.</span> <span class="nav-text">被transient所修饰table变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HashMap为什么线程不安全-hash碰撞与扩容导致"><span class="nav-number">5.2.</span> <span class="nav-text">HashMap为什么线程不安全(hash碰撞与扩容导致)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何线程安全的使用HashMap"><span class="nav-number">5.3.</span> <span class="nav-text">如何线程安全的使用HashMap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#各JDK版本中HashMap的区别"><span class="nav-number">5.4.</span> <span class="nav-text">各JDK版本中HashMap的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考博客"><span class="nav-number">6.</span> <span class="nav-text">参考博客</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#必备知识"><span class="nav-number">1.</span> <span class="nav-text">必备知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常量"><span class="nav-number">2.</span> <span class="nav-text">常量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#成员变量"><span class="nav-number">3.</span> <span class="nav-text">成员变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内部类"><span class="nav-number">4.</span> <span class="nav-text">内部类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Node"><span class="nav-number">4.1.</span> <span class="nav-text">Node</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TreeNode"><span class="nav-number">4.2.</span> <span class="nav-text">TreeNode</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重要方法解析"><span class="nav-number">5.</span> <span class="nav-text">重要方法解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构造方法"><span class="nav-number">5.1.</span> <span class="nav-text">构造方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hash-方法"><span class="nav-number">5.2.</span> <span class="nav-text">hash()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#put-方法"><span class="nav-number">5.3.</span> <span class="nav-text">put()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#resize-方法"><span class="nav-number">5.4.</span> <span class="nav-text">resize()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get-方法"><span class="nav-number">5.5.</span> <span class="nav-text">get()方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他细节"><span class="nav-number">6.</span> <span class="nav-text">其他细节</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#被transient所修饰table变量"><span class="nav-number">6.1.</span> <span class="nav-text">被transient所修饰table变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HashMap为什么线程不安全-hash碰撞与扩容导致"><span class="nav-number">6.2.</span> <span class="nav-text">HashMap为什么线程不安全(hash碰撞与扩容导致)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何线程安全的使用HashMap"><span class="nav-number">6.3.</span> <span class="nav-text">如何线程安全的使用HashMap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#各JDK版本中HashMap的区别"><span class="nav-number">6.4.</span> <span class="nav-text">各JDK版本中HashMap的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考博客"><span class="nav-number">7.</span> <span class="nav-text">参考博客</span></a></li></ol></div>
             
 
           </div>

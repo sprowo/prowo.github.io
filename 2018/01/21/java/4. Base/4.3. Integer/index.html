@@ -89,18 +89,20 @@
 
 
 
-<meta name="description" content="缓存策略">
+<meta name="description" content="Integer是开发中最常用的类之一，下面深入源码分析一下Integer的设计和实现。 jdk版本：1.8 继承结构 Integer是一个不变类，实现了Comparable接口。父类Number是个抽象类，是所有数字类型相关的类的父类，例如Double、Float、Integer、Long和Short。 取值范围1234567891011/** * A constant holding the m">
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Integer详解">
+<meta property="og:title" content="JDK源码分析———Integer类">
 <meta property="og:url" content="https://sprowo.github.io/2018/01/21/java/4. Base/4.3. Integer/index.html">
 <meta property="og:site_name" content="prowo&#39;s Blog">
-<meta property="og:description" content="缓存策略">
+<meta property="og:description" content="Integer是开发中最常用的类之一，下面深入源码分析一下Integer的设计和实现。 jdk版本：1.8 继承结构 Integer是一个不变类，实现了Comparable接口。父类Number是个抽象类，是所有数字类型相关的类的父类，例如Double、Float、Integer、Long和Short。 取值范围1234567891011/** * A constant holding the m">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-28T10:19:11.107Z">
+<meta property="og:image" content="https://sprowo.github.io/img/java/base/Integer.png">
+<meta property="og:updated_time" content="2018-03-01T10:25:06.956Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Integer详解">
-<meta name="twitter:description" content="缓存策略">
+<meta name="twitter:title" content="JDK源码分析———Integer类">
+<meta name="twitter:description" content="Integer是开发中最常用的类之一，下面深入源码分析一下Integer的设计和实现。 jdk版本：1.8 继承结构 Integer是一个不变类，实现了Comparable接口。父类Number是个抽象类，是所有数字类型相关的类的父类，例如Double、Float、Integer、Long和Short。 取值范围1234567891011/** * A constant holding the m">
+<meta name="twitter:image" content="https://sprowo.github.io/img/java/base/Integer.png">
 
 
 
@@ -136,7 +138,7 @@
 
 
 
-  <title>Integer详解 | prowo's Blog</title>
+  <title>JDK源码分析———Integer类 | prowo's Blog</title>
   
 
 
@@ -300,7 +302,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Integer详解</h1>
+          <h1 class="post-title" itemprop="name headline">JDK源码分析———Integer类</h1>
         
 
         <div class="post-meta">
@@ -312,7 +314,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-21T17:30:00+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-21T00:00:00+08:00">
                 2018-01-21
               </time>
             
@@ -372,7 +374,27 @@
       
 
       
-        <p>缓存策略</p>
+        <p>Integer是开发中最常用的类之一，下面深入源码分析一下Integer的设计和实现。</p>
+<p>jdk版本：1.8</p>
+<h2 id="继承结构"><a href="#继承结构" class="headerlink" title="继承结构"></a>继承结构</h2><p><img src="/img/java/base/Integer.png" alt="Integer"></p>
+<p>Integer是一个不变类，实现了Comparable接口。父类Number是个抽象类，是所有数字类型相关的类的父类，例如Double、Float、Integer、Long和Short。</p>
+<h2 id="取值范围"><a href="#取值范围" class="headerlink" title="取值范围"></a>取值范围</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * A constant holding the minimum value an &#123;<span class="doctag">@code</span> int&#125; can</span></span><br><span class="line"><span class="comment"> * have, -2&lt;sup&gt;31&lt;/sup&gt;.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Native</span> <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span>   MIN_VALUE = <span class="number">0x80000000</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * A constant holding the maximum value an &#123;<span class="doctag">@code</span> int&#125; can</span></span><br><span class="line"><span class="comment"> * have, 2&lt;sup&gt;31&lt;/sup&gt;-1.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Native</span> <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span>   MAX_VALUE = <span class="number">0x7fffffff</span>;</span><br></pre></td></tr></table></figure>
+<p>可以看到，Integer类中规定了范围大小时在-2^31~2^31-1之间。</p>
+<h2 id="缓存策略"><a href="#缓存策略" class="headerlink" title="缓存策略"></a>缓存策略</h2><p>Integer的缓存策略是 Java 5 中引入的一个有助于节省内存、提高性能的特性。首先看一个使用 Integer 的示例代码，展示了 Integer 的缓存行为。接着我们将学习这种实现的原因和目的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Integer a = <span class="number">100</span>;</span><br><span class="line">    Integer b = <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line">    Integer c = <span class="number">200</span>;</span><br><span class="line">    Integer d = <span class="number">200</span>;</span><br><span class="line"></span><br><span class="line">    System.out.println(a == b);</span><br><span class="line">    System.out.println(c == d);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">true</span></span><br><span class="line"><span class="keyword">false</span></span><br></pre></td></tr></table></figure></p>
+<p>大多数人都认为上面的两个判断的结果都是false。虽然它们的值相等，但由于比较的是对象，而对象的引用不一样，所以会认为运行结果都是false。在 Java 中，== 比较的是对象引用，而 equals 比较的是值。因此，在这个例子中，不同的对象有不同的引用，所以在进行比较的时候都应该返回 false。原因如下：<br>源码中有一个IntegerCache，这一个私有的内部类。这个类缓存了low - high之间数字的包装类。关于这个类的分析在下面，反正你需要记住它把一些数字的包装类提前缓存了，如果判断成立就把缓存中的那个包装类返回，如果不则new一个新的。</p>
+<h3 id="IntegerCache源码"><a href="#IntegerCache源码" class="headerlink" title="IntegerCache源码"></a>IntegerCache源码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">IntegerCache</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> low = -<span class="number">128</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> high; <span class="comment">// high可以配置，通过 VM 参数-XX:AutoBoxCacheMax=&lt;size&gt;</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> Integer cache[]; <span class="comment">// 缓存数组</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="comment">// high value may be configured by property</span></span><br><span class="line">        <span class="keyword">int</span> h = <span class="number">127</span>;</span><br><span class="line">        String integerCacheHighPropValue =</span><br><span class="line">            sun.misc.VM.getSavedProperty(<span class="string">"java.lang.Integer.IntegerCache.high"</span>); <span class="comment">// 读取VM参数配置</span></span><br><span class="line">        <span class="keyword">if</span> (integerCacheHighPropValue != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">int</span> i = parseInt(integerCacheHighPropValue);</span><br><span class="line">                i = Math.max(i, <span class="number">127</span>); <span class="comment">// 缓存大数</span></span><br><span class="line">                <span class="comment">// Maximum array size is Integer.MAX_VALUE</span></span><br><span class="line">                h = Math.min(i, Integer.MAX_VALUE - (-low) -<span class="number">1</span>); <span class="comment">// 防止越界</span></span><br><span class="line">            &#125; <span class="keyword">catch</span>( NumberFormatException nfe) &#123;</span><br><span class="line">                <span class="comment">// If the property cannot be parsed into an int, ignore it.</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        high = h;</span><br><span class="line"></span><br><span class="line">        cache = <span class="keyword">new</span> Integer[(high - low) + <span class="number">1</span>]; <span class="comment">// 创建缓存数组</span></span><br><span class="line">        <span class="keyword">int</span> j = low;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; cache.length; k++)</span><br><span class="line">            cache[k] = <span class="keyword">new</span> Integer(j++);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// range [-128, 127] must be interned (JLS7 5.1.7)</span></span><br><span class="line">        <span class="keyword">assert</span> IntegerCache.high &gt;= <span class="number">127</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">IntegerCache</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Javadoc 详细的说明这个类是用来实现缓存支持，并支持 -128 到 127 之间的自动装箱过程。最大值 127 可以通过 JVM 的启动参数 -XX:AutoBoxCacheMax=size 修改。 缓存通过一个 for 循环实现。从小到大的创建尽可能多的整数并存储在一个名为 cache 的整数数组中。这个缓存会在 Integer 类第一次被使用的时候被初始化出来。以后，就可以使用缓存中包含的实例对象，而不是创建一个新的实例(在自动装箱的情况下)。</p>
+<p>实际上在 Java 5 中引入这个特性的时候，范围是固定的 -128 至 +127。后来在 Java 6 中，最大值映射到 java.lang.Integer.IntegerCache.high，可以使用 JVM 的启动参数设置最大值。这使我们可以根据应用程序的实际情况灵活地调整来提高性能。是什么原因选择这个 -128 到 127 这个范围呢？因为这个范围的整数值是使用最广泛的。在程序中第一次使用 Integer 的时候也需要一定的额外时间来初始化这个缓存。</p>
+<h3 id="Java语言规范中的缓存行为"><a href="#Java语言规范中的缓存行为" class="headerlink" title="Java语言规范中的缓存行为"></a>Java语言规范中的缓存行为</h3><p>在 Boxing Conversion 部分的Java语言规范(JLS)规定如下：</p>
+<p>如果一个变量 p 的值属于：-128至127之间的整数(§3.10.1)，true 和 false的布尔值 (§3.10.3)，’u0000′ 至 ‘u007f’ 之间的字符(§3.10.4)中时，将 p 包装成 a 和 b 两个对象时，可以直接使用 a == b 判断 a 和 b 的值是否相等。</p>
+<h3 id="其他缓存的对象"><a href="#其他缓存的对象" class="headerlink" title="其他缓存的对象"></a>其他缓存的对象</h3><p>这种缓存行为不仅适用于Integer对象。我们针对所有整数类型的类都有类似的缓存机制。</p>
+<p>有 ByteCache 用于缓存 Byte 对象</p>
+<p>有 ShortCache 用于缓存 Short 对象</p>
+<p>有 LongCache 用于缓存 Long 对象</p>
+<p>有 CharacterCache 用于缓存 Character 对象</p>
+<p>Byte，Short，Long 有固定范围: -128 到 127。对于 Character, 范围是 0 到 127。除了 Integer 可以通过参数改变范围外，其它的都不行。</p>
 
       
     </div>
@@ -403,18 +425,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/21/java/1. J.U.C/1.2. locks/1.2.1. AbstractQueuedSynchronizer/" rel="next" title="AbstractQueuedSynchronizer源码分析">
-                <i class="fa fa-chevron-left"></i> AbstractQueuedSynchronizer源码分析
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/01/21/java/3. Collection/3.2. ConCurrentHashmap/" rel="prev" title="ConCurrentHashMap详解">
-                ConCurrentHashMap详解 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/01/21/java/4. Base/4.1. Object/" rel="prev" title="JDK源码分析——Object类">
+                JDK源码分析——Object类 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -472,8 +490,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -553,6 +580,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#继承结构"><span class="nav-number">1.</span> <span class="nav-text">继承结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#取值范围"><span class="nav-number">2.</span> <span class="nav-text">取值范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存策略"><span class="nav-number">3.</span> <span class="nav-text">缓存策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IntegerCache源码"><span class="nav-number">3.1.</span> <span class="nav-text">IntegerCache源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java语言规范中的缓存行为"><span class="nav-number">3.2.</span> <span class="nav-text">Java语言规范中的缓存行为</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他缓存的对象"><span class="nav-number">3.3.</span> <span class="nav-text">其他缓存的对象</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
