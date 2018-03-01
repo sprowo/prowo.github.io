@@ -89,21 +89,21 @@
 
 
 
-<meta name="description" content="Object类是java中所有类的父类，所有类默认（而非显式）继承Object。这也就意味着，Object类中的所有公有方法也将被任何类所继承。如果，整个java类体系是一颗树，那么Object类毫无疑问就是整棵树的根。">
+<meta name="description" content="Object类是java中所有类的父类，所有类默认（而非显式）继承Object。这也就意味着，Object类中的所有公有方法也将被任何类所继承。如果，整个java类体系是一颗树，那么Object类毫无疑问就是整棵树的根。 jdk版本：1.8 整体分析123456789101112131415161718192021222324252627282930313233343536373839404142">
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Object源码分析">
+<meta property="og:title" content="JDK源码分析——Object类">
 <meta property="og:url" content="https://sprowo.github.io/2018/01/21/java/4. Base/4.1. Object/index.html">
 <meta property="og:site_name" content="prowo&#39;s Blog">
-<meta property="og:description" content="Object类是java中所有类的父类，所有类默认（而非显式）继承Object。这也就意味着，Object类中的所有公有方法也将被任何类所继承。如果，整个java类体系是一颗树，那么Object类毫无疑问就是整棵树的根。">
+<meta property="og:description" content="Object类是java中所有类的父类，所有类默认（而非显式）继承Object。这也就意味着，Object类中的所有公有方法也将被任何类所继承。如果，整个java类体系是一颗树，那么Object类毫无疑问就是整棵树的根。 jdk版本：1.8 整体分析123456789101112131415161718192021222324252627282930313233343536373839404142">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://sprowo.github.io/img/java/base/finalize状态变迁图.gif">
 <meta property="og:image" content="https://sprowo.github.io/img/java/base/浅克隆.png">
 <meta property="og:image" content="https://sprowo.github.io/img/java/base/深克隆.png">
-<meta property="og:updated_time" content="2018-03-01T09:25:34.017Z">
+<meta property="og:updated_time" content="2018-03-01T09:29:48.846Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Object源码分析">
-<meta name="twitter:description" content="Object类是java中所有类的父类，所有类默认（而非显式）继承Object。这也就意味着，Object类中的所有公有方法也将被任何类所继承。如果，整个java类体系是一颗树，那么Object类毫无疑问就是整棵树的根。">
+<meta name="twitter:title" content="JDK源码分析——Object类">
+<meta name="twitter:description" content="Object类是java中所有类的父类，所有类默认（而非显式）继承Object。这也就意味着，Object类中的所有公有方法也将被任何类所继承。如果，整个java类体系是一颗树，那么Object类毫无疑问就是整棵树的根。 jdk版本：1.8 整体分析123456789101112131415161718192021222324252627282930313233343536373839404142">
 <meta name="twitter:image" content="https://sprowo.github.io/img/java/base/finalize状态变迁图.gif">
 
 
@@ -140,7 +140,7 @@
 
 
 
-  <title>Object源码分析 | prowo's Blog</title>
+  <title>JDK源码分析——Object类 | prowo's Blog</title>
   
 
 
@@ -304,7 +304,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Object源码分析</h1>
+          <h1 class="post-title" itemprop="name headline">JDK源码分析——Object类</h1>
         
 
         <div class="post-meta">
@@ -361,10 +361,6 @@
 
           
 
-          
-              <div class="post-description">
-                  Object类是java中所有类的父类，所有类默认（而非显式）继承Object。这也就意味着，Object类中的所有公有方法也将被任何类所继承。如果，整个java类体系是一颗树，那么Object类毫无疑问就是整棵树的根。
-              </div>
           
 
         </div>
