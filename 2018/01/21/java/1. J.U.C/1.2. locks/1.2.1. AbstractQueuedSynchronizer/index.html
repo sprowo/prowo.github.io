@@ -78,7 +78,7 @@
 
 
 
-  <meta name="keywords" content="java," />
+  <meta name="keywords" content="java,JDK源码," />
 
 
 
@@ -90,14 +90,14 @@
 
 
 <meta name="description" content="AbstractQueudSynchronizer是Doug Lea Java并发编程的基础，简称AQS。内部主要包括Node和ConditionObject两个内部类，基于Node节点构建了一个FIFO（先进先出）队列，用来存储等待锁的线程的队列。基于ConditionObject节点也构造了一个FIFO队列，用于存储因为某种原因已经获取到锁而又主动释放锁的线程的队列。在concurrent包下">
-<meta name="keywords" content="java">
+<meta name="keywords" content="java,JDK源码">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AbstractQueuedSynchronizer源码分析">
 <meta property="og:url" content="https://sprowo.github.io/2018/01/21/java/1. J.U.C/1.2. locks/1.2.1. AbstractQueuedSynchronizer/index.html">
 <meta property="og:site_name" content="prowo&#39;s Blog">
 <meta property="og:description" content="AbstractQueudSynchronizer是Doug Lea Java并发编程的基础，简称AQS。内部主要包括Node和ConditionObject两个内部类，基于Node节点构建了一个FIFO（先进先出）队列，用来存储等待锁的线程的队列。基于ConditionObject节点也构造了一个FIFO队列，用于存储因为某种原因已经获取到锁而又主动释放锁的线程的队列。在concurrent包下">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-01T12:22:15.008Z">
+<meta property="og:updated_time" content="2018-03-02T08:30:25.818Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AbstractQueuedSynchronizer源码分析">
 <meta name="twitter:description" content="AbstractQueudSynchronizer是Doug Lea Java并发编程的基础，简称AQS。内部主要包括Node和ConditionObject两个内部类，基于Node节点构建了一个FIFO（先进先出）队列，用来存储等待锁的线程的队列。基于ConditionObject节点也构造了一个FIFO队列，用于存储因为某种原因已经获取到锁而又主动释放锁的线程的队列。在concurrent包下">
@@ -458,6 +458,8 @@
           
             <a href="/tags/java/" rel="tag"># java</a>
           
+            <a href="/tags/JDK源码/" rel="tag"># JDK源码</a>
+          
         </div>
       
 
@@ -468,6 +470,10 @@
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/21/Java工程师面试知识点总结/" rel="next" title="Java工程师面试知识点总结">
+                <i class="fa fa-chevron-left"></i> Java工程师面试知识点总结
+              </a>
             
           </div>
 
@@ -574,7 +580,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -585,7 +591,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
