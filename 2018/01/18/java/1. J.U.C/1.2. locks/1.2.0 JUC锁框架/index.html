@@ -103,7 +103,7 @@
 <meta property="og:image" content="https://sprowo.github.io/img/java/juc/CountDownLatch.jpg">
 <meta property="og:image" content="https://sprowo.github.io/img/java/juc/CyclicBarrier.jpg">
 <meta property="og:image" content="https://sprowo.github.io/img/java/juc/Semaphore.jpg">
-<meta property="og:updated_time" content="2018-03-07T07:17:15.080Z">
+<meta property="og:updated_time" content="2018-03-07T07:28:52.802Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JDK源码分析——JUC锁框架">
 <meta name="twitter:description" content="根据锁的添加到Java中的时间，Java中的锁，可以分为”同步锁”和”JUC包中的锁”。 同步锁即通过synchronized关键字来进行同步，实现对竞争资源的互斥访问的锁。Java 1.0版本中就已经支持同步锁了。 同步锁的原理是，对于每一个对象，有且仅有一个同步锁；不同的线程能共同访问该同步锁。但是，在同一个时间点，该同步锁能且只能被一个线程获取到。这样，获取到同步锁的线程就能进行CPU调度，">
@@ -402,7 +402,7 @@
 <li>ReentrantLock中有一个成员变量sync，sync是Sync类型；Sync是一个抽象类，而且它继承于AQS。</li>
 <li>ReentrantLock中有”公平锁类”FairSync和”非公平锁类”NonfairSync，它们都是Sync的子类。ReentrantReadWriteLock中sync对象，是FairSync与NonfairSync中的一种，这也意味着ReentrantLock是”公平锁”或”非公平锁”中的一种，ReentrantLock默认是非公平锁。</li>
 </ol>
-<h3 id="ReentrantReadWriteLock"><a href="#ReentrantReadWriteLock" class="headerlink" title="ReentrantReadWriteLock"></a>ReentrantReadWriteLock</h3><p>ReentrantReadWriteLock是读写锁接口ReadWriteLock的实现类，它包括子类ReadLock和WriteLock。ReentrantLock是共享锁，而WriteLock是独占锁。</p>
+<h3 id="ReentrantReadWriteLock"><a href="#ReentrantReadWriteLock" class="headerlink" title="ReentrantReadWriteLock"></a>ReentrantReadWriteLock</h3><p>ReentrantReadWriteLock是读写锁接口ReadWriteLock的实现类，它包括子类ReadLock和WriteLock。ReadLock是共享锁，而WriteLock是独占锁。</p>
 <p>ReentrantReadWriteLock的UML类图如下：</p>
 <p><img src="/img/java/juc/ReentrantReadWriteLock.jpg" alt="ReentrantReadWriteLock"></p>
 <ol>
