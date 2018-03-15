@@ -98,7 +98,7 @@
 <meta property="og:description" content="线程状态线程状态解释源码状态枚举类： 12345678public enum State &amp;#123;    NEW,    RUNNABLE,    BLOCKED,    WAITING,    TIMED_WAITING,    TERMINATED;&amp;#125;  NEW：线程刚创建, 尚未启动； RUNNABLE：线程正在正常运行中, 当然可能会有某种耗时计算/IO等待的操作/CPU时间">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://sprowo.github.io/img/java/thread/线程状态转换图.png">
-<meta property="og:updated_time" content="2018-03-07T06:23:14.004Z">
+<meta property="og:updated_time" content="2018-03-15T07:48:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JDK源码分析——Thread类">
 <meta name="twitter:description" content="线程状态线程状态解释源码状态枚举类： 12345678public enum State &amp;#123;    NEW,    RUNNABLE,    BLOCKED,    WAITING,    TIMED_WAITING,    TERMINATED;&amp;#125;  NEW：线程刚创建, 尚未启动； RUNNABLE：线程正在正常运行中, 当然可能会有某种耗时计算/IO等待的操作/CPU时间">
@@ -419,6 +419,28 @@
 <p> 抛出该异常的同时，会重置中断标志位。</p>
 </li>
 </ol>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>public static boolean interrupted()</td>
+<td>测试当前线程是否已经中断。线程的中断状态 由该方法清除。换句话说，如果连续两次调用该方法，则第二次调用将返回 false（在第一次调用已清除了其中断状态之后，且第二次调用检验完中断状态前，当前线程再次中断的情况除外）。</td>
+</tr>
+<tr>
+<td>public boolean isInterrupted()</td>
+<td>测试线程是否已经中断。线程的中断状态不受该方法的影响。</td>
+</tr>
+<tr>
+<td>public void interrupt()</td>
+<td>中断线程。</td>
+</tr>
+</tbody>
+</table>
 <h3 id="suspend-resume"><a href="#suspend-resume" class="headerlink" title="suspend()/resume()"></a>suspend()/resume()</h3><p>挂起线程，直到被resume，才会苏醒。</p>
 <p>但调用suspend()的线程和调用resume()的线程，可能会因为争锁的问题而发生死锁，所以JDK 7开始已经不推荐使用了。</p>
 
