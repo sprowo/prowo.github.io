@@ -78,7 +78,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="java,JDK源码," />
 
 
 
@@ -89,16 +89,18 @@
 
 
 
-<meta name="description" content="Passion＋Persistence＝Possibility.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="prowo&#39;s Blog">
-<meta property="og:url" content="https://sprowo.github.io/tags/spring/index.html">
+<meta name="description" content="TreeMap TreeMap是非线程安全的可以采用这种方式将TreeMap设置为同步的：Map m = Collections.synchronizedSortedMap(new TreeMap(…)); TreeMap是用键来进行升序顺序来排序的。通过Comparable 或 Comparator来排序。TreeMap是SortedMap接口的基于红黑树的实现。此类保证了映射按照升序顺序排列关">
+<meta name="keywords" content="java,JDK源码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JDK源码分析——Map集合类概述">
+<meta property="og:url" content="https://sprowo.github.io/2018/03/15/java/3. Collection/3.3. Map集合类概述/index.html">
 <meta property="og:site_name" content="prowo&#39;s Blog">
-<meta property="og:description" content="Passion＋Persistence＝Possibility.">
+<meta property="og:description" content="TreeMap TreeMap是非线程安全的可以采用这种方式将TreeMap设置为同步的：Map m = Collections.synchronizedSortedMap(new TreeMap(…)); TreeMap是用键来进行升序顺序来排序的。通过Comparable 或 Comparator来排序。TreeMap是SortedMap接口的基于红黑树的实现。此类保证了映射按照升序顺序排列关">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-15T06:50:07.868Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="prowo&#39;s Blog">
-<meta name="twitter:description" content="Passion＋Persistence＝Possibility.">
+<meta name="twitter:title" content="JDK源码分析——Map集合类概述">
+<meta name="twitter:description" content="TreeMap TreeMap是非线程安全的可以采用这种方式将TreeMap设置为同步的：Map m = Collections.synchronizedSortedMap(new TreeMap(…)); TreeMap是用键来进行升序顺序来排序的。通过Comparable 或 Comparator来排序。TreeMap是SortedMap接口的基于红黑树的实现。此类保证了映射按照升序顺序排列关">
 
 
 
@@ -128,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="https://sprowo.github.io/tags/spring/"/>
+  <link rel="canonical" href="https://sprowo.github.io/2018/03/15/java/3. Collection/3.3. Map集合类概述/"/>
 
 
 
 
 
-  <title>标签: spring | prowo's Blog</title>
+  <title>JDK源码分析——Map集合类概述 | prowo's Blog</title>
   
 
 
@@ -163,7 +165,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -267,54 +269,184 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>spring<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sprowo.github.io/2018/03/15/java/3. Collection/3.3. Map集合类概述/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="prowo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="prowo's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/03/13/spring/spring事务/" itemprop="url">
-              
-                <span itemprop="name">Spring源码分析——Spring事务管理</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">JDK源码分析——Map集合类概述</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-13T00:00:00+08:00"
-              content="2018-03-13" >
-          03-13
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-15T00:00:00+08:00">
+                2018-03-15
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="TreeMap"><a href="#TreeMap" class="headerlink" title="TreeMap"></a>TreeMap</h2><ol>
+<li>TreeMap是非线程安全的<br>可以采用这种方式将TreeMap设置为同步的：Map m = Collections.synchronizedSortedMap(new TreeMap(…));</li>
+<li>TreeMap是用键来进行升序顺序来排序的。通过Comparable 或 Comparator来排序。<br>TreeMap是SortedMap接口的基于红黑树的实现。此类保证了映射按照升序顺序排列关键字， 根据使用的构造方法不同，可能会按照键的类的自然顺序进行排序，或者按照创建时所提供的比较器（自定义）进行排序。</li>
+<li>由所有此类的“collection 视图方法”所返回的迭代器都是快速失败的。 </li>
+<li>和HashMap一样，如果插入重复的元素，后面的元素会覆盖前面的。 </li>
+<li>键不可以为null（如果比较器对null做了处理，就可以为null）,但是值可以为null。 </li>
+<li>TreeMap对containsKey、get、put 和 remove 操作提供了保证的 log(n) 时间开销</li>
+</ol>
+<h2 id="LinkedHashMap"><a href="#LinkedHashMap" class="headerlink" title="LinkedHashMap"></a>LinkedHashMap</h2><p>通过维护一个运行于所有条目的双向链表，LinkedHashMap保证了元素迭代的顺序，增加了时间和空间上的开销。</p>
+<p>关于LinkedHashMap，先提两点：</p>
+<ol>
+<li>LinkedHashMap可以认为是HashMap+LinkedList，即它既使用HashMap操作数据结构，又使用LinkedList维护插入元素的先后顺序；</li>
+<li>LinkedHashMap的基本实现思想就是—-多态。可以说，理解多态，再去理解LinkedHashMap原理会事半功倍；反之也是，对于LinkedHashMap原理的学习，也可以促进和加深对于多态的理解。</li>
+</ol>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/JDK源码/" rel="tag"># JDK源码</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/14/分布式/分布式事务/" rel="next" title="分布式系统设计——分布式事务">
+                <i class="fa fa-chevron-left"></i> 分布式系统设计——分布式事务
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -322,6 +454,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="uyan_frame"></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -342,8 +483,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -423,6 +573,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#TreeMap"><span class="nav-number">1.</span> <span class="nav-text">TreeMap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LinkedHashMap"><span class="nav-number">2.</span> <span class="nav-text">LinkedHashMap</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -564,6 +730,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -589,6 +759,11 @@
   
     
 
+    
+      <!-- UY BEGIN -->
+        <div id="uyan_frame"></div>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2158372"></script>
+     <!-- UY END -->
     
   
 
