@@ -375,9 +375,10 @@
       
         
           
-          TreeMap
-TreeMap是非线程安全的可以采用这种方式将TreeMap设置为同步的：Map m = Collections.synchronizedSortedMap(new TreeMap(…));
-TreeMap是用键来进行升序顺序来排序的。通过Comparable 或 Comparato
+          Java为数据结构中的映射定义了一个接口java.util.Map，此接口主要有四个常用的实现类，分别是HashMap、Hashtable、LinkedHashMap和TreeMap，类继承关系如下图所示：
+
+下面针对各个实现类的特点做一些说明：
+(1) HashMap：它根据键的hashCode值
           ...
           <!--noindex-->
           <div class="post-button text-center">
