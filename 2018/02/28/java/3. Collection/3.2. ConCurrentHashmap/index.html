@@ -97,7 +97,7 @@
 <meta property="og:site_name" content="prowo&#39;s Blog">
 <meta property="og:description" content="ConcurrentHashMap是conccurrent家族中的一个类，由于它可以高效地支持并发操作，以及被广泛使用，经典的开源框架Spring的底层数据结构就是使用ConcurrentHashMap实现的。与同是线程安全的老大哥HashTable相比，它已经更胜一筹，因此它的锁更加细化，而不是像HashTable一样为几乎每个方法都添加了synchronized锁，这样的锁无疑会影响到性能。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-19T14:26:16.474Z">
+<meta property="og:updated_time" content="2018-03-20T02:40:39.840Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JDK源码分析——ConCurrentHashMap类">
 <meta name="twitter:description" content="ConcurrentHashMap是conccurrent家族中的一个类，由于它可以高效地支持并发操作，以及被广泛使用，经典的开源框架Spring的底层数据结构就是使用ConcurrentHashMap实现的。与同是线程安全的老大哥HashTable相比，它已经更胜一筹，因此它的锁更加细化，而不是像HashTable一样为几乎每个方法都添加了synchronized锁，这样的锁无疑会影响到性能。">
@@ -460,6 +460,7 @@
 <h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ul>
 <li><a href="http://www.cnblogs.com/leesf456/p/5453341.html" target="_blank" rel="noopener">【JUC】JDK1.8源码分析之ConcurrentHashMap（一）</a></li>
 <li><a href="https://www.jianshu.com/p/289cf670733e" target="_blank" rel="noopener">（转载）Java并发容器：ConcurrentHashMap</a></li>
+<li><a href="http://blog.csdn.net/u010412719/article/details/52145145" target="_blank" rel="noopener">《Java源码分析》：ConcurrentHashMap JDK1.8</a></li>
 </ul>
 
       
@@ -493,8 +494,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/21/Java工程师面试知识点总结/" rel="next" title="Java工程师面试知识点总结">
-                <i class="fa fa-chevron-left"></i> Java工程师面试知识点总结
+              <a href="/2018/01/21/java/3. Collection/3.1. HashMap/" rel="next" title="JDK源码分析——HashMap类">
+                <i class="fa fa-chevron-left"></i> JDK源码分析——HashMap类
               </a>
             
           </div>
@@ -591,7 +592,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

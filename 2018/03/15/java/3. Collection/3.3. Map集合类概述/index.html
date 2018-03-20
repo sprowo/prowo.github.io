@@ -98,7 +98,7 @@
 <meta property="og:description" content="Java为数据结构中的映射定义了一个接口java.util.Map，此接口主要有四个常用的实现类，分别是HashMap、Hashtable、LinkedHashMap和TreeMap，类继承关系如下图所示：  下面针对各个实现类的特点做一些说明： (1) HashMap：它根据键的hashCode值存储数据，大多数情况下可以直接定位到它的值，因而具有很快的访问速度，但遍历顺序却是不确定的。 Has">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://sprowo.github.io/img/java/collection/map类图.png">
-<meta property="og:updated_time" content="2018-03-19T14:03:23.923Z">
+<meta property="og:updated_time" content="2018-03-20T02:46:25.226Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JDK源码分析——Map集合类概述">
 <meta name="twitter:description" content="Java为数据结构中的映射定义了一个接口java.util.Map，此接口主要有四个常用的实现类，分别是HashMap、Hashtable、LinkedHashMap和TreeMap，类继承关系如下图所示：  下面针对各个实现类的特点做一些说明： (1) HashMap：它根据键的hashCode值存储数据，大多数情况下可以直接定位到它的值，因而具有很快的访问速度，但遍历顺序却是不确定的。 Has">
@@ -397,6 +397,10 @@
 <li>LinkedHashMap可以认为是HashMap+LinkedList，即它既使用HashMap操作数据结构，又使用LinkedList维护插入元素的先后顺序；</li>
 <li>LinkedHashMap的基本实现思想就是————多态。可以说，理解多态，再去理解LinkedHashMap原理会事半功倍；反之也是，对于LinkedHashMap原理的学习，也可以促进和加深对于多态的理解。</li>
 </ol>
+<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><ul>
+<li><a href="https://segmentfault.com/a/1190000008982905" target="_blank" rel="noopener">Hashtable源码分析_JDK1.8版本</a></li>
+<li><a href="https://www.jianshu.com/p/3e718f0d2ba4" target="_blank" rel="noopener">Java集合类源码之Map——Hashtable</a></li>
+</ul>
 
       
     </div>
@@ -438,6 +442,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/20/java/2. Thread/2.2. 线程池/" rel="prev" title="JDK源码分析——线程池原理">
+                JDK源码分析——线程池原理 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -523,7 +531,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -594,7 +602,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#TreeMap"><span class="nav-number">1.</span> <span class="nav-text">TreeMap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LinkedHashMap"><span class="nav-number">2.</span> <span class="nav-text">LinkedHashMap</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#TreeMap"><span class="nav-number">1.</span> <span class="nav-text">TreeMap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LinkedHashMap"><span class="nav-number">2.</span> <span class="nav-text">LinkedHashMap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考博客"><span class="nav-number">3.</span> <span class="nav-text">参考博客</span></a></li></ol></div>
             
 
           </div>
