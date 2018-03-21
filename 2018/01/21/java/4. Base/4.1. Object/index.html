@@ -100,7 +100,7 @@
 <meta property="og:image" content="https://sprowo.github.io/img/java/base/finalize状态变迁图.gif">
 <meta property="og:image" content="https://sprowo.github.io/img/java/base/浅克隆.png">
 <meta property="og:image" content="https://sprowo.github.io/img/java/base/深克隆.png">
-<meta property="og:updated_time" content="2018-03-02T08:30:35.398Z">
+<meta property="og:updated_time" content="2018-03-20T10:57:41.654Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JDK源码分析——Object类">
 <meta name="twitter:description" content="Object类是java中所有类的父类，所有类默认（而非显式）继承Object。这也就意味着，Object类中的所有公有方法也将被任何类所继承。如果，整个java类体系是一颗树，那么Object类毫无疑问就是整棵树的根。 jdk版本：1.8 整体分析123456789101112131415161718192021222324252627282930313233343536373839404142">
@@ -459,7 +459,7 @@
 <p>显然，这两个方法是设置等待超时时间的，后者在超值时间上加上ns，精度也难以达到，因此，该方法很少使用。对于前者，如果在等待线程接到通知或被中断之前，已经超过了指定的毫秒数，则它通过竞争重新获得锁，并从wait（long）返回。另外，需要知道，如果设置了超时时间，当wait()返回时，我们不能确定它是因为接到了通知还是因为超时而返回的，因为wait()方法不会返回任何相关的信息。但一般可以通过设置标志位来判断，在notify之前改变标志位的值，在wait()方法后读取该标志位的值来判断，当然为了保证notify不被遗漏，我们还需要另外一个标志位来循环判断是否调用wait()方法。</p>
 <p><strong>深入理解：</strong></p>
 <p>如果线程调用了对象的wait()方法，那么线程便会处于该对象的等待池中，等待池中的线程不会去竞争该对象的锁。</p>
-<p>当有线程调用了对象的notifyAll())方法（唤醒所有wait线程）或notify())方法（只随机唤醒一个wait线程），被唤醒的的线程便会进入该对象的锁池中，锁池中的线程会去竞争该对象锁。</p>
+<p>当有线程调用了对象的notifyAll()方法（唤醒所有wait线程）或 notify())方法（只随机唤醒一个wait线程），被唤醒的的线程便会进入该对象的锁池中，锁池中的线程会去竞争该对象锁。</p>
 <p>优先级高的线程竞争到对象锁的概率大，假若某线程没有竞争到该对象锁，它还会留在锁池中，唯有线程再次调用wait()方法，它才会重新回到等待池中。而竞争到对象锁的线程则继续往下执行，直到执行完了synchronized代码块，它会释放掉该对象锁，这时锁池中的线程会继续竞争该对象锁。</p>
 <h4 id="补充问题"><a href="#补充问题" class="headerlink" title="补充问题"></a>补充问题</h4><p><strong>1. 为何调用wait方法有可能抛出InterruptedException异常？</strong></p>
 <p>这个异常大家应该都知道，当我们调用了某个线程的interrupt方法时，对应的线程会抛出这个异常，wait方法也不希望破坏这种规则，因此就算当前线程因为wait一直在阻塞，当某个线程希望它起来继续执行的时候，它还是得从阻塞态恢复过来，因此wait方法被唤醒起来的时候会去检测这个状态，当有线程interrupt了它的时候，它就会抛出这个异常从阻塞状态恢复过来。</p>
