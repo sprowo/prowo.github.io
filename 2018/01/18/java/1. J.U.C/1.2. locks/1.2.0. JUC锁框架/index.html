@@ -103,7 +103,8 @@
 <meta property="og:image" content="https://sprowo.github.io/img/java/juc/CountDownLatch.jpg">
 <meta property="og:image" content="https://sprowo.github.io/img/java/juc/CyclicBarrier.jpg">
 <meta property="og:image" content="https://sprowo.github.io/img/java/juc/Semaphore.jpg">
-<meta property="og:updated_time" content="2018-03-07T10:23:01.639Z">
+<meta property="og:image" content="https://www.cnblogs.com/dolphin0520/p/3920397.html">
+<meta property="og:updated_time" content="2018-03-21T07:16:19.692Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JDK源码分析——JUC锁框架">
 <meta name="twitter:description" content="根据锁的添加到Java中的时间，Java中的锁，可以分为”同步锁”和”JUC包中的锁”。 同步锁即通过synchronized关键字来进行同步，实现对竞争资源的互斥访问的锁。Java 1.0版本中就已经支持同步锁了。 同步锁的原理是，对于每一个对象，有且仅有一个同步锁；不同的线程能共同访问该同步锁。但是，在同一个时间点，该同步锁能且只能被一个线程获取到。这样，获取到同步锁的线程就能进行CPU调度，">
@@ -426,6 +427,7 @@
 <p>信号量维护了一个信号量许可集。线程可以通过调用acquire()来获取信号量的许可；当信号量中有可用的许可时，线程能获取该许可；否则线程必须等待，直到有可用的许可为止。 线程可以通过release()来释放它所持有的信号量许可。<br>Semaphore的UML类图如下：</p>
 <p><img src="/img/java/juc/Semaphore.jpg" alt="Semaphore"></p>
 <p>和”ReentrantLock”一样，Semaphore包含了sync对象，sync是Sync类型；而且，Sync也是一个继承于AQS的抽象类。Sync也包括”公平信号量”FairSync和”非公平信号量”NonfairSync。</p>
+<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><p><img src="https://www.cnblogs.com/dolphin0520/p/3920397.html" alt="Java并发编程：CountDownLatch、CyclicBarrier和Semaphore"> </p>
 
       
     </div>
@@ -552,7 +554,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -623,7 +625,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#同步锁"><span class="nav-number">1.</span> <span class="nav-text">同步锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JUC包中的锁"><span class="nav-number">2.</span> <span class="nav-text">JUC包中的锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lock接口"><span class="nav-number">2.1.</span> <span class="nav-text">Lock接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ReadWriteLock"><span class="nav-number">2.2.</span> <span class="nav-text">ReadWriteLock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AbstractQueuedSynchronizer"><span class="nav-number">2.3.</span> <span class="nav-text">AbstractQueuedSynchronizer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LockSupport"><span class="nav-number">2.4.</span> <span class="nav-text">LockSupport</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Condition"><span class="nav-number">2.5.</span> <span class="nav-text">Condition</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ReentrantLock"><span class="nav-number">2.6.</span> <span class="nav-text">ReentrantLock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ReentrantReadWriteLock"><span class="nav-number">2.7.</span> <span class="nav-text">ReentrantReadWriteLock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CountDownLatch"><span class="nav-number">2.8.</span> <span class="nav-text">CountDownLatch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CyclicBarrier"><span class="nav-number">2.9.</span> <span class="nav-text">CyclicBarrier</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Semaphore"><span class="nav-number">2.10.</span> <span class="nav-text">Semaphore</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#同步锁"><span class="nav-number">1.</span> <span class="nav-text">同步锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JUC包中的锁"><span class="nav-number">2.</span> <span class="nav-text">JUC包中的锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lock接口"><span class="nav-number">2.1.</span> <span class="nav-text">Lock接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ReadWriteLock"><span class="nav-number">2.2.</span> <span class="nav-text">ReadWriteLock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AbstractQueuedSynchronizer"><span class="nav-number">2.3.</span> <span class="nav-text">AbstractQueuedSynchronizer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LockSupport"><span class="nav-number">2.4.</span> <span class="nav-text">LockSupport</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Condition"><span class="nav-number">2.5.</span> <span class="nav-text">Condition</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ReentrantLock"><span class="nav-number">2.6.</span> <span class="nav-text">ReentrantLock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ReentrantReadWriteLock"><span class="nav-number">2.7.</span> <span class="nav-text">ReentrantReadWriteLock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CountDownLatch"><span class="nav-number">2.8.</span> <span class="nav-text">CountDownLatch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CyclicBarrier"><span class="nav-number">2.9.</span> <span class="nav-text">CyclicBarrier</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Semaphore"><span class="nav-number">2.10.</span> <span class="nav-text">Semaphore</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考博客"><span class="nav-number">3.</span> <span class="nav-text">参考博客</span></a></li></ol></div>
             
 
           </div>

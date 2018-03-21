@@ -89,18 +89,20 @@
 
 
 
-<meta name="description" content="Passion＋Persistence＝Possibility.">
+<meta name="description" content="Synchronized的基本使用Synchronized是Java中解决并发问题的一种最常用的方法，也是最简单的一种方法。Synchronized的作用主要有三个：（1）确保线程互斥的访问同步代码（2）保证共享变量的修改能够及时可见（3）有效解决重排序问题。从语法上讲，Synchronized总共有三种用法：  修饰普通方法：作用于当前实例加锁，进入同步代码前要获得当前实例的锁； 修饰静态方法：">
 <meta name="keywords" content="java,JDK源码">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JDK源码分析——synchronized实现原理">
 <meta property="og:url" content="https://sprowo.github.io/2018/03/07/java/4. Base/4.4. synchronized实现原理/index.html">
 <meta property="og:site_name" content="prowo&#39;s Blog">
-<meta property="og:description" content="Passion＋Persistence＝Possibility.">
+<meta property="og:description" content="Synchronized的基本使用Synchronized是Java中解决并发问题的一种最常用的方法，也是最简单的一种方法。Synchronized的作用主要有三个：（1）确保线程互斥的访问同步代码（2）保证共享变量的修改能够及时可见（3）有效解决重排序问题。从语法上讲，Synchronized总共有三种用法：  修饰普通方法：作用于当前实例加锁，进入同步代码前要获得当前实例的锁； 修饰静态方法：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-07T12:04:24.945Z">
+<meta property="og:image" content="http://www.cnblogs.com/paddix/p/5367116.html">
+<meta property="og:updated_time" content="2018-03-21T07:35:08.730Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JDK源码分析——synchronized实现原理">
-<meta name="twitter:description" content="Passion＋Persistence＝Possibility.">
+<meta name="twitter:description" content="Synchronized的基本使用Synchronized是Java中解决并发问题的一种最常用的方法，也是最简单的一种方法。Synchronized的作用主要有三个：（1）确保线程互斥的访问同步代码（2）保证共享变量的修改能够及时可见（3）有效解决重排序问题。从语法上讲，Synchronized总共有三种用法：  修饰普通方法：作用于当前实例加锁，进入同步代码前要获得当前实例的锁； 修饰静态方法：">
+<meta name="twitter:image" content="http://www.cnblogs.com/paddix/p/5367116.html">
 
 
 
@@ -372,7 +374,15 @@
       
 
       
-        
+        <h2 id="Synchronized的基本使用"><a href="#Synchronized的基本使用" class="headerlink" title="Synchronized的基本使用"></a>Synchronized的基本使用</h2><p>Synchronized是Java中解决并发问题的一种最常用的方法，也是最简单的一种方法。Synchronized的作用主要有三个：（1）确保线程互斥的访问同步代码（2）保证共享变量的修改能够及时可见（3）有效解决重排序问题。从语法上讲，Synchronized总共有三种用法：</p>
+<ul>
+<li>修饰普通方法：作用于当前实例加锁，进入同步代码前要获得当前实例的锁；</li>
+<li>修饰静态方法：作用于当前类对象加锁，进入同步代码前要获得当前类对象的锁；</li>
+<li>修饰代码块：指定加锁对象，对给定对象加锁，进入同步代码库前要获得给定对象的锁。</li>
+</ul>
+<p>接下来我就通过几个例子程序来说明一下这三种使用方式（为了便于比较，三段代码除了Synchronized的使用方式不同以外，其他基本保持一致）。</p>
+<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><p><img src="http://www.cnblogs.com/paddix/p/5367116.html" alt="Java并发编程：Synchronized及其实现原理"></p>
+
       
     </div>
     
@@ -473,8 +483,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -493,7 +512,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -554,6 +573,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Synchronized的基本使用"><span class="nav-number">1.</span> <span class="nav-text">Synchronized的基本使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考博客"><span class="nav-number">2.</span> <span class="nav-text">参考博客</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
