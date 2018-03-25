@@ -78,7 +78,7 @@
 
 
 
-  <meta name="keywords" content="java,JDK源码," />
+  <meta name="keywords" content="mysql," />
 
 
 
@@ -89,20 +89,18 @@
 
 
 
-<meta name="description" content="ThreadLocal这个概念很重要，面试也是经常问，由此可见大多数人不容易掌握这个知识点。其实其实现原理非常简单，简单理解“Thread”即线程，“Local”即本地。连续起来理解就是每个线程本地独有的。强烈你推荐看下面的概念引入，我将叙述为什么会有这个概念的出现。 概念引入现在的软件开发过程中，并发是很重要的手段。由此而带来的语言层面的切入点就是线程了，引入多线程开发之后，自然要考虑好同步、互">
-<meta name="keywords" content="java,JDK源码">
+<meta name="description" content="锁的类型数据库使用锁是为了支持更好的并发，提供数据的完整性和一致性。InnoDB是一个支持行锁的存储引擎，锁的类型有：共享锁（S）、排他锁（X）、意向共享（IS）、意向排他（IX）。 一致性非锁定读为了提供更好的并发，InnoDB提供了一致性非锁定读：不需要等待访问行上的锁释放，读取行的一个快照。快照数据是指该行的之前版本的数据。该实现是通过undo段来实现的，而undo用来在事务中回滚数据，因此">
+<meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JDK源码分析——ThreadLocal类">
-<meta property="og:url" content="https://sprowo.github.io/2018/03/21/java/2. Thread/2.4. ThreadLocal/index.html">
+<meta property="og:title" content="mysql——innodb锁机制">
+<meta property="og:url" content="https://sprowo.github.io/2018/03/23/mysql/innodb锁机制/index.html">
 <meta property="og:site_name" content="prowo&#39;s Blog">
-<meta property="og:description" content="ThreadLocal这个概念很重要，面试也是经常问，由此可见大多数人不容易掌握这个知识点。其实其实现原理非常简单，简单理解“Thread”即线程，“Local”即本地。连续起来理解就是每个线程本地独有的。强烈你推荐看下面的概念引入，我将叙述为什么会有这个概念的出现。 概念引入现在的软件开发过程中，并发是很重要的手段。由此而带来的语言层面的切入点就是线程了，引入多线程开发之后，自然要考虑好同步、互">
+<meta property="og:description" content="锁的类型数据库使用锁是为了支持更好的并发，提供数据的完整性和一致性。InnoDB是一个支持行锁的存储引擎，锁的类型有：共享锁（S）、排他锁（X）、意向共享（IS）、意向排他（IX）。 一致性非锁定读为了提供更好的并发，InnoDB提供了一致性非锁定读：不需要等待访问行上的锁释放，读取行的一个快照。快照数据是指该行的之前版本的数据。该实现是通过undo段来实现的，而undo用来在事务中回滚数据，因此">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://allenwu.itscoder.com/threadlocal-source">
-<meta property="og:updated_time" content="2018-03-21T10:39:33.931Z">
+<meta property="og:updated_time" content="2018-03-23T06:32:19.710Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JDK源码分析——ThreadLocal类">
-<meta name="twitter:description" content="ThreadLocal这个概念很重要，面试也是经常问，由此可见大多数人不容易掌握这个知识点。其实其实现原理非常简单，简单理解“Thread”即线程，“Local”即本地。连续起来理解就是每个线程本地独有的。强烈你推荐看下面的概念引入，我将叙述为什么会有这个概念的出现。 概念引入现在的软件开发过程中，并发是很重要的手段。由此而带来的语言层面的切入点就是线程了，引入多线程开发之后，自然要考虑好同步、互">
-<meta name="twitter:image" content="https://allenwu.itscoder.com/threadlocal-source">
+<meta name="twitter:title" content="mysql——innodb锁机制">
+<meta name="twitter:description" content="锁的类型数据库使用锁是为了支持更好的并发，提供数据的完整性和一致性。InnoDB是一个支持行锁的存储引擎，锁的类型有：共享锁（S）、排他锁（X）、意向共享（IS）、意向排他（IX）。 一致性非锁定读为了提供更好的并发，InnoDB提供了一致性非锁定读：不需要等待访问行上的锁释放，读取行的一个快照。快照数据是指该行的之前版本的数据。该实现是通过undo段来实现的，而undo用来在事务中回滚数据，因此">
 
 
 
@@ -132,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="https://sprowo.github.io/2018/03/21/java/2. Thread/2.4. ThreadLocal/"/>
+  <link rel="canonical" href="https://sprowo.github.io/2018/03/23/mysql/innodb锁机制/"/>
 
 
 
 
 
-  <title>JDK源码分析——ThreadLocal类 | prowo's Blog</title>
+  <title>mysql——innodb锁机制 | prowo's Blog</title>
   
 
 
@@ -285,7 +283,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://sprowo.github.io/2018/03/21/java/2. Thread/2.4. ThreadLocal/">
+    <link itemprop="mainEntityOfPage" href="https://sprowo.github.io/2018/03/23/mysql/innodb锁机制/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="prowo">
@@ -302,7 +300,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">JDK源码分析——ThreadLocal类</h1>
+          <h1 class="post-title" itemprop="name headline">mysql——innodb锁机制</h1>
         
 
         <div class="post-meta">
@@ -314,8 +312,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-21T00:00:00+08:00">
-                2018-03-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-23T00:00:00+08:00">
+                2018-03-23
               </time>
             
 
@@ -337,8 +335,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
                   </a>
                 </span>
 
@@ -374,12 +372,15 @@
       
 
       
-        <p>ThreadLocal这个概念很重要，面试也是经常问，由此可见大多数人不容易掌握这个知识点。其实其实现原理非常简单，简单理解“Thread”即线程，“Local”即本地。连续起来理解就是<strong>每个线程本地独有的</strong>。强烈你推荐看下面的概念引入，我将叙述为什么会有这个概念的出现。</p>
-<h2 id="概念引入"><a href="#概念引入" class="headerlink" title="概念引入"></a>概念引入</h2><p>现在的软件开发过程中，并发是很重要的手段。由此而带来的语言层面的切入点就是线程了，引入多线程开发之后，自然要考虑好同步、互斥、安全等内容。而因为这些需求就出现了以下三种来实现线程安全的手段。</p>
-<p><strong>互斥同步</strong><br>简单点理解就是通过加锁来实现对临界资源的访问限制。加锁方式有Synchorized和Lock。</p>
-<p><strong>非阻塞同步</strong><br>前面提到的互斥同步属于一种悲观锁机制，非阻塞同步属于乐观锁机制。典型的实现方式就是CAS操作。</p>
-<p><strong>无同步方案</strong><br>要保证线程安全，并不是一定就需要同步，两者没有因果关系，同步只是保证共享数据征用时正确性的手段，如果一个方法本来就不涉及共享数据，那它就不需要任何同步措施去保证正确性。ThreadLocal的概念就是从这里引申出来的。</p>
-<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><p><img src="https://allenwu.itscoder.com/threadlocal-source" alt="深入理解 Java 之 ThreadLocal 工作原理"></p>
+        <h2 id="锁的类型"><a href="#锁的类型" class="headerlink" title="锁的类型"></a>锁的类型</h2><p>数据库使用锁是为了支持更好的并发，提供数据的完整性和一致性。InnoDB是一个支持行锁的存储引擎，锁的类型有：共享锁（S）、排他锁（X）、意向共享（IS）、意向排他（IX）。</p>
+<h2 id="一致性非锁定读"><a href="#一致性非锁定读" class="headerlink" title="一致性非锁定读"></a>一致性非锁定读</h2><p>为了提供更好的并发，InnoDB提供了一致性非锁定读：不需要等待访问行上的锁释放，读取行的一个快照。快照数据是指该行的之前版本的数据。该实现是通过undo段来实现的，而undo用来在事务中回滚数据，因此快照数据本身没有额外的开销。</p>
+<p>该方法是通过InnoDB的一个特性：MVCC来实现的。</p>
+<h2 id="一致性锁定读"><a href="#一致性锁定读" class="headerlink" title="一致性锁定读"></a>一致性锁定读</h2><p>select * from … for update</p>
+<h2 id="锁的算法"><a href="#锁的算法" class="headerlink" title="锁的算法"></a>锁的算法</h2><ol>
+<li>Record Lock：单个行记录上的锁。</li>
+<li>Gap Lock：间隙锁，锁定一个范围，但不包括记录本身。GAP锁的目的，是为了防止同一事务的两次当前读，出现幻读的情况。</li>
+<li>Next-Key Lock：1+2，锁定一个范围，并且锁定记录本身。对于行的查询，都是采用该方法，主要目的是解决幻读的问题。</li>
+</ol>
 
       
     </div>
@@ -397,9 +398,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/java/" rel="tag"># java</a>
-          
-            <a href="/tags/JDK源码/" rel="tag"># JDK源码</a>
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
           
         </div>
       
@@ -412,8 +411,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/21/java/2. Thread/2.3. 线程池原理/" rel="next" title="JDK源码分析——线程池原理">
-                <i class="fa fa-chevron-left"></i> JDK源码分析——线程池原理
+              <a href="/2018/03/21/java/2. Thread/2.4. ThreadLocal/" rel="next" title="JDK源码分析——ThreadLocal类">
+                <i class="fa fa-chevron-left"></i> JDK源码分析——ThreadLocal类
               </a>
             
           </div>
@@ -422,8 +421,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/03/23/mysql/innodb锁机制/" rel="prev" title="mysql——innodb锁机制">
-                mysql——innodb锁机制 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/03/23/mysql/事务实现原理/" rel="prev" title="mysql——innodb事务实现原理">
+                mysql——innodb事务实现原理 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -581,7 +580,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念引入"><span class="nav-number">1.</span> <span class="nav-text">概念引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考博客"><span class="nav-number">2.</span> <span class="nav-text">参考博客</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#锁的类型"><span class="nav-number">1.</span> <span class="nav-text">锁的类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一致性非锁定读"><span class="nav-number">2.</span> <span class="nav-text">一致性非锁定读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一致性锁定读"><span class="nav-number">3.</span> <span class="nav-text">一致性锁定读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#锁的算法"><span class="nav-number">4.</span> <span class="nav-text">锁的算法</span></a></li></ol></div>
             
 
           </div>

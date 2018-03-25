@@ -97,7 +97,7 @@
 <meta property="og:site_name" content="prowo&#39;s Blog">
 <meta property="og:description" content="哈希表（hash table）也叫散列表，是一种非常重要的数据结构，应用场景及其丰富，许多缓存技术（比如memcached、redis）的核心其实就是在内存中维护一张大的哈希表，而HashMap的实现原理也常常出现在各类的面试题中，重要性可见一般。本文将深入源码，分析HashMap实现原理。源码基于JDk1.8。 必备知识HashMap的底层原理基于哈希表，如果你还未了解哈希表原理，请参考《浅谈算">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-19T02:52:09.062Z">
+<meta property="og:updated_time" content="2018-03-25T11:31:24.021Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JDK源码分析——HashMap类">
 <meta name="twitter:description" content="哈希表（hash table）也叫散列表，是一种非常重要的数据结构，应用场景及其丰富，许多缓存技术（比如memcached、redis）的核心其实就是在内存中维护一张大的哈希表，而HashMap的实现原理也常常出现在各类的面试题中，重要性可见一般。本文将深入源码，分析HashMap实现原理。源码基于JDk1.8。 必备知识HashMap的底层原理基于哈希表，如果你还未了解哈希表原理，请参考《浅谈算">
@@ -409,9 +409,16 @@
 </ol>
 <p>以上两个问题中，第一个问题比较好理解，第二个问题解释一下。HashMap 的get/put/remove等方法第一步就是根据 hash 找到键所在的桶位置，但如果键没有覆写 hashCode 方法，计算 hash 时最终调用 Object 中的 hashCode 方法。但 Object 中的 hashCode 方法是 native 型的，不同的 JVM 下，可能会有不同的实现，产生的 hash 可能也是不一样的。也就是说同一个键在不同平台下可能会产生不同的 hash，此时再对在同一个 table 继续操作，就会出现问题。</p>
 <p>综上所述，大家应该能明白HashMap不序列化table的原因了。</p>
-<h3 id="HashMap为什么线程不安全-hash碰撞与扩容导致"><a href="#HashMap为什么线程不安全-hash碰撞与扩容导致" class="headerlink" title="HashMap为什么线程不安全(hash碰撞与扩容导致)"></a>HashMap为什么线程不安全(hash碰撞与扩容导致)</h3><ol>
-<li>如果多个线程同时使用put方法添加元素，而且假设正好存在两个put的key发生了碰撞(hash值一样)，那么根据HashMap的实现，这两个key会添加到数组的同一个位置，这样最终就会发生其中一个线程的put的数据被覆盖。</li>
-<li>如果多个线程同时检测到元素个数超过数组大小*loadFactor，这样就会发生多个线程同时对Node数组进行扩容，都在重新计算元素位置以及复制数据，但是最终只有一个线程扩容后的数组会赋给table，也就是说其他线程的都会丢失，并且各自线程put的数据也丢失。</li>
+<h3 id="HashMap为什么线程不安全"><a href="#HashMap为什么线程不安全" class="headerlink" title="HashMap为什么线程不安全"></a>HashMap为什么线程不安全</h3><p>一直以来只是知道HashMap是线程不安全的，但是到底HashMap为什么线程不安全，多线程并发的时候在什么情况下可能出现问题？</p>
+<p>javadoc中关于hashmap的一段描述如下：</p>
+<blockquote>
+<p>此实现不是同步的。如果多个线程同时访问一个哈希映射，而其中至少一个线程从结构上修改了该映射，则它必须 保持外部同步。（结构上的修改是指添加或删除一个或多个映射关系的任何操作；仅改变与实例已经包含的键关联的值不是结构上的修改。）这一般通过对自然封装该映射的对象进行同步操作来完成。如果不存在这样的对象，则应该使用 Collections.synchronizedMap() 方法来“包装”该映射。最好在创建时完成这一操作，以防止对映射进行意外的非同步访问，如下所示：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Map m = Collections.synchronizedMap(<span class="keyword">new</span> HashMap(...));</span><br></pre></td></tr></table></figure>
+<ol>
+<li>如果多个线程同时使用put方法添加元素，而且假设正好存在两个put的key发生了碰撞(hash值一样)，那么根据HashMap的实现，这两个key会添加到数组的同一个位置，这样最终就会发生其中一个线程的put的数据被覆盖；</li>
+<li>如果多个线程同时检测到元素个数超过数组大小*loadFactor，这样就会发生多个线程同时对Node数组进行扩容，都在重新计算元素位置以及复制数据，但是最终只有一个线程扩容后的数组会赋给table，也就是说其他线程的都会丢失，并且各自线程put的数据也丢失；</li>
+<li>jdk 1.7中resize()导致死循环。</li>
 </ol>
 <h3 id="如何线程安全的使用HashMap"><a href="#如何线程安全的使用HashMap" class="headerlink" title="如何线程安全的使用HashMap"></a>如何线程安全的使用HashMap</h3><ul>
 <li>Hashtable</li>
@@ -469,8 +476,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/21/java/4. Base/4.3. Integer/" rel="next" title="JDK源码分析———Integer类">
-                <i class="fa fa-chevron-left"></i> JDK源码分析———Integer类
+              <a href="/2018/01/21/Java工程师面试知识点总结/" rel="next" title="Java工程师面试知识点总结">
+                <i class="fa fa-chevron-left"></i> Java工程师面试知识点总结
               </a>
             
           </div>
@@ -479,8 +486,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/01/21/java/1. J.U.C/1.2. locks/1.2.1. AbstractQueuedSynchronizer/" rel="prev" title="JDK源码分析——AbstractQueuedSynchronizer类">
-                JDK源码分析——AbstractQueuedSynchronizer类 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/02/28/java/3. Collection/3.2. ConCurrentHashmap/" rel="prev" title="JDK源码分析——ConCurrentHashMap类">
+                JDK源码分析——ConCurrentHashMap类 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -567,7 +574,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -578,7 +585,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -589,7 +596,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -638,7 +645,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#必备知识"><span class="nav-number">1.</span> <span class="nav-text">必备知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常量"><span class="nav-number">2.</span> <span class="nav-text">常量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#成员变量"><span class="nav-number">3.</span> <span class="nav-text">成员变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内部类"><span class="nav-number">4.</span> <span class="nav-text">内部类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Node"><span class="nav-number">4.1.</span> <span class="nav-text">Node</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TreeNode"><span class="nav-number">4.2.</span> <span class="nav-text">TreeNode</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重要方法解析"><span class="nav-number">5.</span> <span class="nav-text">重要方法解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构造方法"><span class="nav-number">5.1.</span> <span class="nav-text">构造方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hash-方法"><span class="nav-number">5.2.</span> <span class="nav-text">hash()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#put-方法"><span class="nav-number">5.3.</span> <span class="nav-text">put()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#resize-方法"><span class="nav-number">5.4.</span> <span class="nav-text">resize()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get-方法"><span class="nav-number">5.5.</span> <span class="nav-text">get()方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他细节"><span class="nav-number">6.</span> <span class="nav-text">其他细节</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#被transient所修饰table变量"><span class="nav-number">6.1.</span> <span class="nav-text">被transient所修饰table变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HashMap为什么线程不安全-hash碰撞与扩容导致"><span class="nav-number">6.2.</span> <span class="nav-text">HashMap为什么线程不安全(hash碰撞与扩容导致)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何线程安全的使用HashMap"><span class="nav-number">6.3.</span> <span class="nav-text">如何线程安全的使用HashMap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#各JDK版本中HashMap的区别"><span class="nav-number">6.4.</span> <span class="nav-text">各JDK版本中HashMap的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考博客"><span class="nav-number">7.</span> <span class="nav-text">参考博客</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#必备知识"><span class="nav-number">1.</span> <span class="nav-text">必备知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常量"><span class="nav-number">2.</span> <span class="nav-text">常量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#成员变量"><span class="nav-number">3.</span> <span class="nav-text">成员变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内部类"><span class="nav-number">4.</span> <span class="nav-text">内部类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Node"><span class="nav-number">4.1.</span> <span class="nav-text">Node</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TreeNode"><span class="nav-number">4.2.</span> <span class="nav-text">TreeNode</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重要方法解析"><span class="nav-number">5.</span> <span class="nav-text">重要方法解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构造方法"><span class="nav-number">5.1.</span> <span class="nav-text">构造方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hash-方法"><span class="nav-number">5.2.</span> <span class="nav-text">hash()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#put-方法"><span class="nav-number">5.3.</span> <span class="nav-text">put()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#resize-方法"><span class="nav-number">5.4.</span> <span class="nav-text">resize()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get-方法"><span class="nav-number">5.5.</span> <span class="nav-text">get()方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他细节"><span class="nav-number">6.</span> <span class="nav-text">其他细节</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#被transient所修饰table变量"><span class="nav-number">6.1.</span> <span class="nav-text">被transient所修饰table变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HashMap为什么线程不安全"><span class="nav-number">6.2.</span> <span class="nav-text">HashMap为什么线程不安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何线程安全的使用HashMap"><span class="nav-number">6.3.</span> <span class="nav-text">如何线程安全的使用HashMap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#各JDK版本中HashMap的区别"><span class="nav-number">6.4.</span> <span class="nav-text">各JDK版本中HashMap的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考博客"><span class="nav-number">7.</span> <span class="nav-text">参考博客</span></a></li></ol></div>
             
 
           </div>

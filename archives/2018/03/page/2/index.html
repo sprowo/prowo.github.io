@@ -78,7 +78,7 @@
 
 
 
-  <meta name="keywords" content="java,JDK源码," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -89,20 +89,16 @@
 
 
 
-<meta name="description" content="ThreadLocal这个概念很重要，面试也是经常问，由此可见大多数人不容易掌握这个知识点。其实其实现原理非常简单，简单理解“Thread”即线程，“Local”即本地。连续起来理解就是每个线程本地独有的。强烈你推荐看下面的概念引入，我将叙述为什么会有这个概念的出现。 概念引入现在的软件开发过程中，并发是很重要的手段。由此而带来的语言层面的切入点就是线程了，引入多线程开发之后，自然要考虑好同步、互">
-<meta name="keywords" content="java,JDK源码">
-<meta property="og:type" content="article">
-<meta property="og:title" content="JDK源码分析——ThreadLocal类">
-<meta property="og:url" content="https://sprowo.github.io/2018/03/21/java/2. Thread/2.4. ThreadLocal/index.html">
+<meta name="description" content="Passion＋Persistence＝Possibility.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="prowo&#39;s Blog">
+<meta property="og:url" content="https://sprowo.github.io/archives/2018/03/page/2/index.html">
 <meta property="og:site_name" content="prowo&#39;s Blog">
-<meta property="og:description" content="ThreadLocal这个概念很重要，面试也是经常问，由此可见大多数人不容易掌握这个知识点。其实其实现原理非常简单，简单理解“Thread”即线程，“Local”即本地。连续起来理解就是每个线程本地独有的。强烈你推荐看下面的概念引入，我将叙述为什么会有这个概念的出现。 概念引入现在的软件开发过程中，并发是很重要的手段。由此而带来的语言层面的切入点就是线程了，引入多线程开发之后，自然要考虑好同步、互">
+<meta property="og:description" content="Passion＋Persistence＝Possibility.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://allenwu.itscoder.com/threadlocal-source">
-<meta property="og:updated_time" content="2018-03-21T10:39:33.931Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JDK源码分析——ThreadLocal类">
-<meta name="twitter:description" content="ThreadLocal这个概念很重要，面试也是经常问，由此可见大多数人不容易掌握这个知识点。其实其实现原理非常简单，简单理解“Thread”即线程，“Local”即本地。连续起来理解就是每个线程本地独有的。强烈你推荐看下面的概念引入，我将叙述为什么会有这个概念的出现。 概念引入现在的软件开发过程中，并发是很重要的手段。由此而带来的语言层面的切入点就是线程了，引入多线程开发之后，自然要考虑好同步、互">
-<meta name="twitter:image" content="https://allenwu.itscoder.com/threadlocal-source">
+<meta name="twitter:title" content="prowo&#39;s Blog">
+<meta name="twitter:description" content="Passion＋Persistence＝Possibility.">
 
 
 
@@ -132,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="https://sprowo.github.io/2018/03/21/java/2. Thread/2.4. ThreadLocal/"/>
+  <link rel="canonical" href="https://sprowo.github.io/archives/2018/03/page/2/"/>
 
 
 
 
 
-  <title>JDK源码分析——ThreadLocal类 | prowo's Blog</title>
+  <title>归档 | prowo's Blog</title>
   
 
 
@@ -167,7 +163,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left page-archive">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -271,180 +267,78 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block archive">
+    <div id="posts" class="posts-collapse">
+      <span class="archive-move-on"></span>
 
-  
+      <span class="archive-page-counter">
+        
+        
+        
+          
+        
+        嗯..! 目前共计 21 篇日志。 继续努力。
+      </span>
 
-  
-  
-  
+      
+
+        
+        
+        
+
+        
+          
+          <div class="collection-title">
+            <h1 class="archive-year" id="archive-year-2018">2018</h1>
+          </div>
+        
+        
+
+        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://sprowo.github.io/2018/03/21/java/2. Thread/2.4. ThreadLocal/">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="prowo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="prowo's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h2 class="post-title">
         
+            <a class="post-title-link" href="/2018/03/02/java/1. J.U.C/1.2. locks/1.2.3. Lock框架详解/" itemprop="url">
+              
+                <span itemprop="name">JDK源码分析——Lock类</span>
+              
+            </a>
         
-          <h1 class="post-title" itemprop="name headline">JDK源码分析——ThreadLocal类</h1>
-        
+      </h2>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-21T00:00:00+08:00">
-                2018-03-21
-              </time>
-            
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-03-02T00:00:00+08:00"
+              content="2018-03-02" >
+          03-02
+        </time>
+      </div>
 
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>ThreadLocal这个概念很重要，面试也是经常问，由此可见大多数人不容易掌握这个知识点。其实其实现原理非常简单，简单理解“Thread”即线程，“Local”即本地。连续起来理解就是<strong>每个线程本地独有的</strong>。强烈你推荐看下面的概念引入，我将叙述为什么会有这个概念的出现。</p>
-<h2 id="概念引入"><a href="#概念引入" class="headerlink" title="概念引入"></a>概念引入</h2><p>现在的软件开发过程中，并发是很重要的手段。由此而带来的语言层面的切入点就是线程了，引入多线程开发之后，自然要考虑好同步、互斥、安全等内容。而因为这些需求就出现了以下三种来实现线程安全的手段。</p>
-<p><strong>互斥同步</strong><br>简单点理解就是通过加锁来实现对临界资源的访问限制。加锁方式有Synchorized和Lock。</p>
-<p><strong>非阻塞同步</strong><br>前面提到的互斥同步属于一种悲观锁机制，非阻塞同步属于乐观锁机制。典型的实现方式就是CAS操作。</p>
-<p><strong>无同步方案</strong><br>要保证线程安全，并不是一定就需要同步，两者没有因果关系，同步只是保证共享数据征用时正确性的手段，如果一个方法本来就不涉及共享数据，那它就不需要任何同步措施去保证正确性。ThreadLocal的概念就是从这里引申出来的。</p>
-<h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2><p><img src="https://allenwu.itscoder.com/threadlocal-source" alt="深入理解 Java 之 ThreadLocal 工作原理"></p>
-
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/java/" rel="tag"># java</a>
-          
-            <a href="/tags/JDK源码/" rel="tag"># JDK源码</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/03/21/java/2. Thread/2.3. 线程池原理/" rel="next" title="JDK源码分析——线程池原理">
-                <i class="fa fa-chevron-left"></i> JDK源码分析——线程池原理
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/23/mysql/innodb锁机制/" rel="prev" title="mysql——innodb锁机制">
-                mysql——innodb锁机制 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+    </header>
   </article>
 
 
 
-    <div class="post-spread">
       
+
     </div>
   </div>
+  
+  
+  
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/archives/2018/03/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/2018/03/">1</a><span class="page-number current">2</span>
+  </nav>
+
+
 
 
           </div>
@@ -452,15 +346,6 @@
 
 
           
-
-  
-    <div class="comments" id="comments">
-      <div id="uyan_frame"></div>
-    </div>
-
-  
-
-
 
         </div>
         
@@ -481,17 +366,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -571,22 +447,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念引入"><span class="nav-number">1.</span> <span class="nav-text">概念引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考博客"><span class="nav-number">2.</span> <span class="nav-text">参考博客</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -728,10 +588,6 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   
 
@@ -757,11 +613,6 @@
   
     
 
-    
-      <!-- UY BEGIN -->
-        <div id="uyan_frame"></div>
-        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2158372"></script>
-     <!-- UY END -->
     
   
 
