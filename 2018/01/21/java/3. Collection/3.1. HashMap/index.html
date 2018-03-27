@@ -97,7 +97,7 @@
 <meta property="og:site_name" content="prowo&#39;s Blog">
 <meta property="og:description" content="哈希表（hash table）也叫散列表，是一种非常重要的数据结构，应用场景及其丰富，许多缓存技术（比如memcached、redis）的核心其实就是在内存中维护一张大的哈希表，而HashMap的实现原理也常常出现在各类的面试题中，重要性可见一般。本文将深入源码，分析HashMap实现原理。源码基于JDk1.8。 必备知识HashMap的底层原理基于哈希表，如果你还未了解哈希表原理，请参考《浅谈算">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-25T11:31:24.021Z">
+<meta property="og:updated_time" content="2018-03-25T11:45:51.661Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JDK源码分析——HashMap类">
 <meta name="twitter:description" content="哈希表（hash table）也叫散列表，是一种非常重要的数据结构，应用场景及其丰富，许多缓存技术（比如memcached、redis）的核心其实就是在内存中维护一张大的哈希表，而HashMap的实现原理也常常出现在各类的面试题中，重要性可见一般。本文将深入源码，分析HashMap实现原理。源码基于JDk1.8。 必备知识HashMap的底层原理基于哈希表，如果你还未了解哈希表原理，请参考《浅谈算">
@@ -412,7 +412,7 @@
 <h3 id="HashMap为什么线程不安全"><a href="#HashMap为什么线程不安全" class="headerlink" title="HashMap为什么线程不安全"></a>HashMap为什么线程不安全</h3><p>一直以来只是知道HashMap是线程不安全的，但是到底HashMap为什么线程不安全，多线程并发的时候在什么情况下可能出现问题？</p>
 <p>javadoc中关于hashmap的一段描述如下：</p>
 <blockquote>
-<p>此实现不是同步的。如果多个线程同时访问一个哈希映射，而其中至少一个线程从结构上修改了该映射，则它必须 保持外部同步。（结构上的修改是指添加或删除一个或多个映射关系的任何操作；仅改变与实例已经包含的键关联的值不是结构上的修改。）这一般通过对自然封装该映射的对象进行同步操作来完成。如果不存在这样的对象，则应该使用 Collections.synchronizedMap() 方法来“包装”该映射。最好在创建时完成这一操作，以防止对映射进行意外的非同步访问，如下所示：</p>
+<p>此实现不是同步的。如果多个线程同时访问一个哈希映射，而其中至少一个线程从结构上修改了该映射，则它必须保持外部同步。（结构上的修改是指添加或删除一个或多个映射关系的任何操作；仅改变与实例已经包含的键关联的值不是结构上的修改。）这一般通过对自然封装该映射的对象进行同步操作来完成。如果不存在这样的对象，则应该使用 Collections.synchronizedMap() 方法来“包装”该映射。最好在创建时完成这一操作，以防止对映射进行意外的非同步访问，如下所示：</p>
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Map m = Collections.synchronizedMap(<span class="keyword">new</span> HashMap(...));</span><br></pre></td></tr></table></figure>
 <ol>
@@ -476,8 +476,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/21/Java工程师面试知识点总结/" rel="next" title="Java工程师面试知识点总结">
-                <i class="fa fa-chevron-left"></i> Java工程师面试知识点总结
+              <a href="/2018/01/21/java/4. Base/4.3. Integer/" rel="next" title="JDK源码分析———Integer类">
+                <i class="fa fa-chevron-left"></i> JDK源码分析———Integer类
               </a>
             
           </div>
@@ -486,8 +486,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/02/28/java/3. Collection/3.2. ConCurrentHashmap/" rel="prev" title="JDK源码分析——ConCurrentHashMap类">
-                JDK源码分析——ConCurrentHashMap类 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/01/21/java/4. Base/4.1. Object/" rel="prev" title="JDK源码分析——Object类">
+                JDK源码分析——Object类 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -574,7 +574,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -585,7 +585,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -596,7 +596,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
