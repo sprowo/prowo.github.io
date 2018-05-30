@@ -282,7 +282,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://sprowo.github.io/2018/01/21/java/1. J.U.C/1.2. locks/1.2.1. AbstractQueuedSynchronizer/">
+    <link itemprop="mainEntityOfPage" href="https://sprowo.github.io/2018/01/21/java/4. Base/4.1. Object/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="prowo">
@@ -301,7 +301,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/01/21/java/1. J.U.C/1.2. locks/1.2.1. AbstractQueuedSynchronizer/" itemprop="url">JDK源码分析——AbstractQueuedSynchronizer类</a></h1>
+                <a class="post-title-link" href="/2018/01/21/java/4. Base/4.1. Object/" itemprop="url">JDK源码分析——Object类</a></h1>
         
 
         <div class="post-meta">
@@ -375,11 +375,164 @@
       
         
           
-          AbstractQueudSynchronizer是Doug Lea Java并发编程的基础，简称AQS。内部主要包括Node和ConditionObject两个内部类，基于Node节点构建了一个FIFO（先进先出）队列，用来存储等待锁的线程的队列。基于ConditionObject节点也构造了一个
+          Object类是java中所有类的父类，所有类默认（而非显式）继承Object。这也就意味着，Object类中的所有公有方法也将被任何类所继承。如果，整个java类体系是一颗树，那么Object类毫无疑问就是整棵树的根。
+jdk版本：1.8
+整体分析1234567891011121314151617
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/01/21/java/1. J.U.C/1.2. locks/1.2.1. AbstractQueuedSynchronizer/#more" rel="contents">
+            <a class="btn" href="/2018/01/21/java/4. Base/4.1. Object/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sprowo.github.io/2018/01/21/java/2. Thread/2.1. Thead/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="prowo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="prowo's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/21/java/2. Thread/2.1. Thead/" itemprop="url">JDK源码分析——Thread类</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-21T00:00:00+08:00">
+                2018-01-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          线程状态线程状态解释源码状态枚举类：
+12345678public enum State &#123;    NEW,    RUNNABLE,    BLOCKED,    WAITING,    TIMED_WAITING,    TERMINATED;&#125;
+
+NEW：线程刚创建, 尚未
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/21/java/2. Thread/2.1. Thead/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -769,7 +922,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
