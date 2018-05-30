@@ -89,18 +89,18 @@
 
 
 
-<meta name="description" content="Passion＋Persistence＝Possibility.">
+<meta name="description" content="工厂模式（Factory Pattern）是 Java 中最常用的设计模式之一。属于创建型模式，它提供了一种创建对象的最佳方式。在工厂模式中，我们在创建对象时不会对客户端暴露创建逻辑，并且是通过使用一个共同的接口来指向新创建的对象。工厂模式根据抽象程度的不同分为三种：简单工厂模式、静态工厂方法模式、抽象工厂模式。 简单工厂模式12345public interface ICar &amp;#123;">
 <meta name="keywords" content="设计模式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="设计模式——工厂模式">
 <meta property="og:url" content="https://sprowo.github.io/2018/04/04/设计模式/1. 工厂模式/index.html">
 <meta property="og:site_name" content="prowo&#39;s Blog">
-<meta property="og:description" content="Passion＋Persistence＝Possibility.">
+<meta property="og:description" content="工厂模式（Factory Pattern）是 Java 中最常用的设计模式之一。属于创建型模式，它提供了一种创建对象的最佳方式。在工厂模式中，我们在创建对象时不会对客户端暴露创建逻辑，并且是通过使用一个共同的接口来指向新创建的对象。工厂模式根据抽象程度的不同分为三种：简单工厂模式、静态工厂方法模式、抽象工厂模式。 简单工厂模式12345public interface ICar &amp;#123;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-28T12:46:46.043Z">
+<meta property="og:updated_time" content="2018-05-30T11:51:34.042Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式——工厂模式">
-<meta name="twitter:description" content="Passion＋Persistence＝Possibility.">
+<meta name="twitter:description" content="工厂模式（Factory Pattern）是 Java 中最常用的设计模式之一。属于创建型模式，它提供了一种创建对象的最佳方式。在工厂模式中，我们在创建对象时不会对客户端暴露创建逻辑，并且是通过使用一个共同的接口来指向新创建的对象。工厂模式根据抽象程度的不同分为三种：简单工厂模式、静态工厂方法模式、抽象工厂模式。 简单工厂模式12345public interface ICar &amp;#123;">
 
 
 
@@ -372,7 +372,12 @@
       
 
       
-        
+        <p>工厂模式（Factory Pattern）是 Java 中最常用的设计模式之一。属于创建型模式，它提供了一种创建对象的最佳方式。在工厂模式中，我们在创建对象时不会对客户端暴露创建逻辑，并且是通过使用一个共同的接口来指向新创建的对象。工厂模式根据抽象程度的不同分为三种：简单工厂模式、静态工厂方法模式、抽象工厂模式。</p>
+<h2 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ICar</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BMW</span> <span class="keyword">implements</span> <span class="title">ICar</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.err.println(<span class="string">"I'm bmw ... ..."</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Benz</span> <span class="keyword">implements</span> <span class="title">ICar</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.err.println(<span class="string">"I'm benz ... ..."</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CarFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ICar <span class="title">getCar</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">switch</span> (name) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"bmw"</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> BMW();</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"benz"</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> Benz();</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleFactoryTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ICar bmw = CarFactory.getCar(<span class="string">"bmw"</span>);</span><br><span class="line">        ICar benz = CarFactory.getCar(<span class="string">"benz"</span>);</span><br><span class="line">        bmw.run();</span><br><span class="line">        benz.run();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Console: </span><br><span class="line">I<span class="string">'m bmw ... ...</span></span><br><span class="line"><span class="string">I'</span>m benz ... ...</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -467,8 +472,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -548,6 +562,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单工厂模式"><span class="nav-number">1.</span> <span class="nav-text">简单工厂模式</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
